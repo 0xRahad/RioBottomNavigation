@@ -33,45 +33,67 @@ dependencies{
 
 ```kotlin
 @Composable
-fun MyApp() {
-    val buttons = listOf(
-        RioBottomNavItemData(
-            imageVector = Icons.Outlined.Home,
-            selected = true,
-            onClick = { /* Navigate to Home */ },
-            label = "Home"
-        ),
-        RioBottomNavItemData(
-            imageVector = Icons.Outlined.Search,
-            selected = false,
-            onClick = { /* Navigate to Search */ },
-            label = "Search"
-        ),
-        RioBottomNavItemData(
-            imageVector = Icons.Outlined.Notifications,
-            selected = false,
-            onClick = { /* Navigate to Notifications */ },
-            label = "Notifications"
-        ),
-        RioBottomNavItemData(
-            imageVector = Icons.Outlined.AccountCircle,
-            selected = false,
-            onClick = { /* Navigate to Account */ },
-            label = "Account"
-        )
+fun MainScreen() {
+    // Constants for icon resources and labels
+    val items = listOf(
+        R.drawable.ic_account,
+        R.drawable.ic_transfer,
+        R.drawable.ic_payment,
+        R.drawable.ic_explore
     )
 
-    RioBottomNavigation(
-        fabIcon = Icons.Outlined.AccountBox,
-        buttons = buttons,
-        selectedItemColor = Color(0xFF7980FF),
-        unselectedItemColor = Color.Gray,
-        backgroundColor = Color.White,
-        fabBackgroundColor = Color.Red,
-        onFabClick = { /* Perform FAB action */ }
+    val labels = listOf(
+        "Account",
+        "Transfer",
+        "Payment",
+        "Explore"
     )
+
+    // Use rememberSaveable to retain state across configuration changes
+    var selectedIndex = rememberSaveable { mutableIntStateOf(0) }
+
+    // Create RioBottomNavItemData for the bottom navigation buttons
+    val buttons = items.mapIndexed { index, iconData ->
+        RioBottomNavItemData(
+            imageVector = ImageVector.vectorResource(iconData),
+            selected = index == selectedIndex.intValue,
+            onClick = { selectedIndex.intValue = index },
+            label = labels[index]
+        )
+    }
+
+    // Main Scaffold setup
+    Scaffold(
+        bottomBar = {
+            BottomNavigationBar(buttons = buttons)
+        },
+        modifier = Modifier.fillMaxSize()
+    ) { innerPadding ->
+        // Handle the screen content based on the selected index
+        ScreenContent(selectedIndex.intValue, modifier = Modifier.padding(innerPadding))
+    }
 }
 
+@Composable
+fun ScreenContent(selectedIndex: Int, modifier: Modifier = Modifier) {
+    when (selectedIndex) {
+        0 -> ShowText("Account")
+        1 -> ShowText("Transfer")
+        2 -> ShowText("Payment")
+        3 -> ShowText("Explore")
+    }
+}
+@Composable
+fun BottomNavigationBar(buttons: List<RioBottomNavItemData>) {
+    RioBottomNavigation(
+        fabIcon = ImageVector.vectorResource(id = R.drawable.ic_qr),
+        buttons = buttons,
+        fabSize = 70.dp,
+        barHeight = 70.dp,
+        selectedItemColor = fabColor,
+        fabBackgroundColor = fabColor,
+    )
+}
 ```
 
 <b>Note: </b>
