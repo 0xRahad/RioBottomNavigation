@@ -21,14 +21,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun BottomBar(
+fun RioBottomNavigation(
     barHeight: Dp = 70.dp,
     fabSize: Dp = 64.dp,
     fabIconSize: Dp = 32.dp,
     cardTopCornerSize: Dp = 24.dp,
     cardElevation: Dp = 8.dp,
     fabIcon: ImageVector,
-    buttons: List<BottomBarItemData>,
+    buttons: List<RioBottomNavItemData>,
     selectedItemColor: Color = Color(0xFF7980FF),
     unselectedItemColor: Color = Color(0xFF464D61).copy(alpha = 0.7f),
     backgroundColor: Color = Color.White,
@@ -67,7 +67,7 @@ fun BottomBar(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                BottomBarItem(
+                RioBottomNavItem(
                     buttons[0],
                     selectedItemColor,
                     unselectedItemColor,
@@ -77,7 +77,7 @@ fun BottomBar(
                     labelFontSize,
                     labelFontWeight
                 )
-                BottomBarItem(
+                RioBottomNavItem(
                     buttons[1],
                     selectedItemColor,
                     unselectedItemColor,
@@ -88,7 +88,7 @@ fun BottomBar(
                     labelFontWeight
                 )
                 Spacer(modifier = Modifier.size(fabSize)) // Spacer for the FAB
-                BottomBarItem(
+                RioBottomNavItem(
                     buttons[2],
                     selectedItemColor,
                     unselectedItemColor,
@@ -98,7 +98,7 @@ fun BottomBar(
                     labelFontSize,
                     labelFontWeight
                 )
-                BottomBarItem(
+                RioBottomNavItem(
                     buttons[3],
                     selectedItemColor,
                     unselectedItemColor,
@@ -132,8 +132,8 @@ fun BottomBar(
 }
 
 @Composable
-fun BottomBarItem(
-    itemData: BottomBarItemData,
+fun RioBottomNavItem(
+    itemData: RioBottomNavItemData,
     selectedItemColor: Color,
     unselectedItemColor: Color,
     itemPadding: Dp = 8.dp, // Customizable padding for the item
@@ -180,7 +180,7 @@ fun BottomBarItem(
     }
 }
 
-data class BottomBarItemData(
+data class RioBottomNavItemData(
     val imageVector: ImageVector? = null, // For Material Icons
     val drawableResId: Int? = null, // For Drawable Resources
     val selected: Boolean = false,
